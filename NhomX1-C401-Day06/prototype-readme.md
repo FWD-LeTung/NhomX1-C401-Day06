@@ -10,7 +10,7 @@ Chatbot tư vấn mua xe VinFast: tra cứu thông số, gợi ý chọn xe theo
 ## Links
 - Demo web: **[DÁN LINK DEMO WEB Ở ĐÂY]**
 - Video/Drive: **[DÁN LINK DRIVE Ở ĐÂY]**
-- GitHub repo: repo hiện tại
+- GitHub repo: https://github.com/FWD-LeTung/NhomX1-C401-Day06.git
 
 ## Tools
 - UI: **Chainlit** (`app.py`, `.chainlit/config.toml`)
