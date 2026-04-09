@@ -1,4 +1,5 @@
 import json
+import re
 import chainlit as cl
 from dotenv import load_dotenv
 from langchain_core.messages import HumanMessage, AIMessage
@@ -17,6 +18,32 @@ TOOL_DISPLAY_NAMES = {
     "tool_search_reddit_comments": "💬 Tìm bình luận Reddit",
     "tool_search_vinfast_showrooms": "📍 Tìm showroom VinFast",
 }
+
+# Regex patterns để extract YouTube video ID từ các dạng URL
+_YT_PATTERNS = [
+    re.compile(r"(?:https?://)?(?:www\.)?youtube\.com/watch\?v=([a-zA-Z0-9_-]{11})"),
+    re.compile(r"(?:https?://)?youtu\.be/([a-zA-Z0-9_-]{11})"),
+    re.compile(r"(?:https?://)?(?:www\.)?youtube\.com/embed/([a-zA-Z0-9_-]{11})"),
+]
+
+
+def _extract_youtube_thumbnails(text: str) -> list[cl.Image]:
+    """Tìm tất cả YouTube URLs trong text và tạo thumbnail Image elements."""
+    seen_ids = set()
+    images = []
+    for pattern in _YT_PATTERNS:
+        for match in pattern.finditer(text):
+            video_id = match.group(1)
+            if video_id not in seen_ids:
+                seen_ids.add(video_id)
+                images.append(
+                    cl.Image(
+                        url=f"https://img.youtube.com/vi/{video_id}/hqdefault.jpg",
+                        name=f"YouTube: {video_id}",
+                        display="inline",
+                    )
+                )
+    return images
 
 
 @cl.set_starters
@@ -100,6 +127,11 @@ async def on_message(message: cl.Message):
 
     # Cập nhật message cuối cùng
     final_msg.content = final_content
+
+    # Attach YouTube thumbnails nếu có link YouTube trong response
+    yt_images = _extract_youtube_thumbnails(final_content)
+    if yt_images:
+        final_msg.elements = yt_images
 
     # Thêm feedback buttons
     final_msg.actions = [
