@@ -1,21 +1,21 @@
-# AI Product Canvas — Vietnam Airlines Chatbot NEO
+# AI Product Canvas — VinFast AI Advisor
 
 ## Canvas
 
 |   | Value | Trust | Feasibility |
 |---|-------|-------|-------------|
 | **Câu hỏi guide** | User nào? Pain gì? AI giải quyết gì mà cách hiện tại không giải được? | Khi AI sai thì user bị ảnh hưởng thế nào? User biết AI sai bằng cách nào? User sửa bằng cách nào? | Cost bao nhiêu/request? Latency bao lâu? Risk chính là gì? |
-| **Trả lời** | **User:** hành khách Vietnam Airlines cần hỗ trợ nhanh về chuyến bay, hành lý, đổi vé, check-in. <br><br> **Pain:** tổng đài thường quá tải, user phải chờ lâu hoặc phải tìm thông tin trong nhiều trang FAQ. <br><br> **AI giải quyết:** chatbot NEO cho phép user hỏi trực tiếp bằng ngôn ngữ tự nhiên và nhận câu trả lời ngay lập tức, giúp giảm thời gian tìm kiếm và giảm tải cho tổng đài. | **Ảnh hưởng khi AI sai:** user có thể nhận thông tin sai về hành lý, đổi vé hoặc check-in, dẫn đến nhầm lẫn hoặc mất thời gian. <br><br> **User biết AI sai:** câu trả lời không khớp với tình huống của họ hoặc khác với thông tin trên website. <br><br> **User sửa:** hỏi lại chatbot, chọn menu FAQ, hoặc chuyển sang tìm thông tin trên website / liên hệ hotline. | **Cost:** nếu dùng LLM API có thể khoảng **$0.001–$0.01/request** (ước lượng). <br><br> **Latency:** khoảng **1–3 giây** cho mỗi câu trả lời. <br><br> **Risk:** AI hiểu sai intent của user, cung cấp thông tin không chính xác, hoặc không xử lý được câu hỏi phức tạp. |
+| **Trả lời** | **User:** người đang cân nhắc mua xe VinFast lần đầu hoặc muốn đổi xe trong 6-12 tháng tới. <br><br> **Pain:** phải đọc nhiều review rời rạc (YouTube, forum, báo), thông tin giá/thông số dễ mâu thuẫn, mất 2-5 giờ mới có quyết định sơ bộ. <br><br> **AI giải quyết:** chatbot tổng hợp nhanh theo nhu cầu cá nhân (ngân sách, quãng đường, số chỗ), gợi ý 1-2 mẫu xe phù hợp và nêu lý do có dẫn nguồn. | **Ảnh hưởng khi AI sai:** user có thể hiểu sai giá, sai thông số, hoặc chọn nhầm mẫu xe không phù hợp nhu cầu. <br><br> **User biết AI sai:** phát hiện câu trả lời mâu thuẫn với nguồn đính kèm hoặc với thông tin showroom/chính hãng. <br><br> **User sửa:** bấm “Sai/Thiếu nguồn”, chọn loại lỗi, nhập thông tin đúng hoặc hỏi lại với điều kiện rõ hơn; hệ thống ghi correction log. | **Cost:** khoảng **$0.002-$0.02/request** tùy số lần gọi tool + độ dài phản hồi. <br><br> **Latency:** mục tiêu **P95 < 4 giây**. <br><br> **Risk:** hallucination ở nhóm thông tin nhạy cảm (giá/an toàn), dữ liệu cũ, truy xuất nhầm nguồn cùng tên xe. |
 
 ---
 
 ## Automation hay augmentation?
 
-☐ Automation — AI làm thay, user không can thiệp  
-☑ Augmentation — AI gợi ý, user quyết định cuối cùng  
+☐ Automation — AI làm thay, user không can thiệp
+☑ Augmentation — AI gợi ý, user quyết định cuối cùng
 
 **Justify:**  
-Chatbot NEO chủ yếu cung cấp thông tin và gợi ý, không tự động thực hiện các hành động quan trọng như đổi vé hoặc hoàn tiền. User vẫn phải xác nhận hoặc thực hiện bước cuối cùng. Điều này giúp giảm rủi ro khi AI trả lời sai.
+AI chỉ đóng vai trò tư vấn ban đầu và tổng hợp thông tin. Quyết định mua xe, lái thử, ký hợp đồng và xác nhận giá cuối cùng vẫn do khách hàng + tư vấn viên thực hiện, nên cost of reject thấp và dễ kiểm soát rủi ro.
 
 ---
 
@@ -23,28 +23,29 @@ Chatbot NEO chủ yếu cung cấp thông tin và gợi ý, không tự động 
 
 | # | Câu hỏi | Trả lời |
 |---|---------|---------|
-| 1 | User correction đi vào đâu? | Khi user nhập lại câu hỏi, chọn menu khác hoặc chuyển sang link FAQ, hệ thống có thể ghi lại log để cải thiện intent detection và training data cho chatbot. |
-| 2 | Product thu signal gì để biết tốt lên hay tệ đi? | - Tỉ lệ chatbot trả lời thành công <br> - Số lần user phải hỏi lại <br> - Tỉ lệ user chuyển sang hotline hoặc human support <br> - User feedback / rating chatbot |
-| 3 | Data thuộc loại nào? | ☑ Domain-specific · ☑ User-specific · ☑ Real-time |
+| 1 | User correction đi vào đâu? | Vào correction log gồm: câu hỏi, câu trả lời, tool đã gọi, nguồn trích dẫn, loại lỗi (sai giá/sai thông số/sai nguồn), thời điểm, và nội dung user chỉnh sửa. |
+| 2 | Product thu signal gì để biết tốt lên hay tệ đi? | - Tỷ lệ “Hữu ích” <br> - Tỷ lệ “Sai/Thiếu nguồn” <br> - Tỷ lệ user hỏi sâu (>= 3 câu/phiên) <br> - Tỷ lệ để lại thông tin liên hệ hợp lệ |
+| 3 | Data thuộc loại nào? | ☑ Domain-specific · ☑ Human-judgment · ☑ Real-time (một phần) · ☑ User-specific (mức nhẹ) |
 
 **Giải thích:**
 
-- **Domain-specific:** dữ liệu về quy định hàng không, hành lý, chuyến bay  
-- **User-specific:** lịch sử câu hỏi của từng user  
-- **Real-time:** thông tin chuyến bay thay đổi liên tục  
+- **Domain-specific:** thông số kỹ thuật xe, phiên bản, phân khúc, review tiếng Việt theo từng mẫu xe
+- **Human-judgment:** phản hồi “Hữu ích”/“Sai” và dữ liệu user sửa câu trả lời
+- **Real-time (một phần):** giá/khuyến mãi và tình trạng thị trường thay đổi theo thời điểm
+- **User-specific (mức nhẹ):** ngữ cảnh phiên chat hiện tại (nhu cầu, ngân sách, ưu tiên)
 
 ---
 
 ## Có marginal value không?
 
-Có **marginal value ở mức trung bình**.
+Có **marginal value rõ ràng**.
 
-Một phần dữ liệu như **FAQ hàng không** đã phổ biến và nhiều chatbot khác cũng có thể truy cập.  
+Thông tin công khai (giá niêm yết, thông số cơ bản) thì đối thủ cũng có thể thu thập.
 
-Tuy nhiên, Vietnam Airlines có lợi thế ở:
+Nhưng lợi thế tích lũy nằm ở:
 
-- dữ liệu nội bộ về chuyến bay  
-- hành vi khách hàng  
-- log tương tác chatbot  
+- correction log nội bộ theo lỗi thực tế của người dùng Việt
+- dữ liệu tương tác theo ngữ cảnh nhu cầu mua xe (đi phố/đường dài/gia đình)
+- hiệu quả gợi ý theo hành vi user ở giai đoạn tiền mua
 
-Những dữ liệu này giúp chatbot **hiểu nhu cầu user tốt hơn theo thời gian**.
+Những tín hiệu này giúp hệ thống cải thiện chất lượng tư vấn theo thời gian, khó sao chép nhanh.

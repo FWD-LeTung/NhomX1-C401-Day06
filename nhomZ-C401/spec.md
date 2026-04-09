@@ -1,8 +1,18 @@
 # SPEC — AI Product Hackathon
 
-**Nhóm:** Bàn Z-C401  
-**Track:** VinFast  
+**Nhóm:** Bàn Z-C401
+**Track:** VinFast
 **Problem statement (1 câu):** Người mua xe VinFast hiện phải tự đọc nhiều review rời rạc, mất thời gian và khó kiểm chứng; chatbot AI giúp tổng hợp thông tin theo nhu cầu cá nhân, có dẫn nguồn rõ ràng, để rút ngắn thời gian ra quyết định.
+
+## Tech stack
+
+- **LLM:** Qwen 3.5-Flash (DashScope API compatible endpoint)
+- **Framework:** LangGraph + LangChain
+- **Vector DB:** ChromaDB
+- **Embeddings:** OpenAI Embeddings
+- **Search:** Brave Search API (YouTube, Reddit, showroom)
+- **UI:** Chainlit
+- **Ngôn ngữ:** Python 3.13
 
 ---
 
@@ -13,14 +23,14 @@
 | **Câu hỏi** | User nào? Pain gì? AI giải gì? | Khi AI sai thì sao? User sửa bằng cách nào? | Cost/latency bao nhiêu? Risk chính? |
 | **Trả lời** | **Người dùng mục tiêu:** người đang cân nhắc mua xe VinFast lần đầu hoặc đổi xe.  <br>**Nỗi đau:** mất 2-5 giờ để đọc nhiều nguồn, thông tin mâu thuẫn, khó so sánh theo nhu cầu thực tế (đi phố, gia đình, ngân sách).  <br>**Giá trị AI:** tóm tắt ưu/nhược điểm theo từng mẫu xe (VF3, VF5, VF8...), đề xuất 1-2 lựa chọn phù hợp và nêu lý do có thể kiểm chứng. | **Rủi ro chính:** AI nêu sai thông số, sai giá, hoặc trích sai nguồn.  <br>**Cách giảm rủi ro:** chỉ trả lời dựa trên dữ liệu đã lập chỉ mục; bắt buộc hiển thị nguồn cho thông tin quan trọng (giá, pin, an toàn).  <br>**Khi AI sai:** người dùng bấm “Sai/Thiếu nguồn”, chọn loại lỗi và gửi chỉnh sửa; hệ thống ghi correction log để cải thiện dữ liệu và prompt theo chu kỳ. | **Kỹ thuật:** RAG (truy xuất tài liệu rồi mới sinh câu trả lời), có bước xếp hạng lại kết quả truy xuất.  <br>**Mục tiêu tốc độ:** P95 < 4 giây (95% câu trả lời hoàn tất dưới 4 giây).  <br>**Mục tiêu chi phí:** <= $0.02/câu hỏi.  <br>**Rủi ro vận hành:** dữ liệu cũ, thiên lệch nguồn, thiếu dữ liệu cho phiên bản xe mới. |
 
-**Automation hay augmentation?** Augmentation  
+**Automation hay augmentation?** Augmentation
 Justify: AI hỗ trợ tư vấn ban đầu; quyết định mua, lái thử và chốt sale vẫn do khách hàng và tư vấn viên showroom.
 
 **Learning signal:**
 
 1. Dữ liệu chỉnh sửa của người dùng đi vào đâu? Vào correction log gồm: loại lỗi, câu hỏi, câu trả lời, nguồn, mẫu xe, thời điểm, và hành động sửa.
 2. Sản phẩm đo gì để biết tốt lên hay tệ đi? Tỷ lệ “Hữu ích”, tỷ lệ “Sai/Thiếu nguồn”, tỷ lệ người dùng hỏi sâu (>= 3 câu/phiên), tỷ lệ để lại thông tin liên hệ hợp lệ.
-3. Dữ liệu thuộc loại nào? **Loại chính là Domain-specific**. Ngoài ra có Human-judgment (feedback/chỉnh sửa), Real-time một phần (giá/khuyến mãi), và User-specific mức nhẹ (ngữ cảnh phiên chat).  
+3. Dữ liệu thuộc loại nào? **Loại chính là Domain-specific**. Ngoài ra có Human-judgment (feedback/chỉnh sửa), Real-time một phần (giá/khuyến mãi), và User-specific mức nhẹ (ngữ cảnh phiên chat).
    Có marginal value không? Có. Dữ liệu correction nội bộ và dữ liệu review tiếng Việt theo ngữ cảnh sử dụng thực tế tạo lợi thế tích lũy theo thời gian.
 
 ---
@@ -53,8 +63,8 @@ Justify: AI hỗ trợ tư vấn ban đầu; quyết định mua, lái thử và
 
 ## 3. Eval metrics + threshold
 
-**Optimize precision hay recall?** Precision  
-Tại sao? Bài toán tư vấn mua xe cần độ đúng cao; sai thông tin giá/an toàn làm mất niềm tin ngay từ lần đầu.  
+**Optimize precision hay recall?** Precision
+Tại sao? Bài toán tư vấn mua xe cần độ đúng cao; sai thông tin giá/an toàn làm mất niềm tin ngay từ lần đầu.
 Nếu chọn sai hướng thì sao? Nếu thiên về recall quá mức, chatbot có thể trả lời nhiều nhưng kém chắc chắn, làm tăng lỗi và giảm tỷ lệ để lại thông tin liên hệ.
 
 | Metric | Threshold | Red flag (dừng khi) |
