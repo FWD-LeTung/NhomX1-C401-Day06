@@ -1,15 +1,6 @@
 # 🚗 VinFast AI Advisor — Chatbot Tư Vấn Xe VinFast
 
-> Nhóm Z-C401 · Practical AI Hackathon
-
-## Thành viên
-
-| Họ và tên | MSSV | Phân công |
-|-----------|------|-----------|
-| Lê Văn Tùng | 2A202600111 | Search Tools (YouTube, Reddit, Showroom) |
-| Nguyễn Đức Sĩ | 2A202600152 | Xây dựng Database & RAG |
-| Lê Thành Thưởng | 2A202600106 | Xây dựng Database & RAG |
-| Đinh Thái Tuấn | 2A202600360 | UI (Chainlit) & Eval Metrics |
+> Nhóm X1-C401 · Practical AI Hackathon
 
 ## Giới thiệu
 
