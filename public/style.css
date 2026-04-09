@@ -1,113 +1,193 @@
-/* ── VinFast AI Advisor – Custom Theme ── */
+/* ── VinFast AI Advisor – Production Theme ── */
 
-/* Brand color palette */
+/* ── Brand palette ── */
 :root {
-  --vinfast-green: #00a651;
-  --vinfast-green-dark: #008c44;
-  --vinfast-green-light: #e6f7ed;
-  --vinfast-accent: #00c853;
-  --bg-dark: #0f1419;
-  --bg-card: #1a1f2e;
-  --text-primary: #e8eaed;
-  --text-muted: #9aa0a6;
+  --vf-primary: #00a651;
+  --vf-primary-dark: #008c44;
+  --vf-primary-light: #00c853;
+  --vf-primary-glow: rgba(0, 166, 81, 0.15);
+  --vf-primary-glow-strong: rgba(0, 166, 81, 0.3);
+  --vf-surface: #1e1e2e;
+  --vf-surface-hover: #2a2a3e;
+  --vf-border: rgba(255,255,255,0.08);
+  --vf-radius: 14px;
+  --vf-radius-sm: 10px;
+  --vf-shadow: 0 2px 12px rgba(0,0,0,0.2);
+  --vf-shadow-hover: 0 8px 24px rgba(0, 166, 81, 0.18);
+  --vf-transition: 0.25s cubic-bezier(.4,0,.2,1);
 }
 
-/* ── Chat header / assistant name ── */
-.MuiAppBar-root,
-header {
-  background: linear-gradient(135deg, var(--vinfast-green-dark), var(--vinfast-green)) !important;
+/* ── Global font and smoothing ── */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* ── Starter buttons ── */
+/* ── Starter cards ── */
 button[class*="starter"] {
-  border: 1.5px solid var(--vinfast-green) !important;
-  border-radius: 12px !important;
-  transition: all 0.2s ease !important;
+  border: 1.5px solid var(--vf-border) !important;
+  border-radius: var(--vf-radius) !important;
+  background: var(--vf-surface) !important;
+  backdrop-filter: blur(8px);
+  transition: all var(--vf-transition) !important;
+  box-shadow: var(--vf-shadow);
 }
 button[class*="starter"]:hover {
-  background: var(--vinfast-green-light) !important;
-  border-color: var(--vinfast-green-dark) !important;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 166, 81, 0.25);
+  border-color: var(--vf-primary) !important;
+  background: var(--vf-surface-hover) !important;
+  transform: translateY(-3px);
+  box-shadow: var(--vf-shadow-hover);
 }
 
-/* ── Chat bubbles ── */
+/* ── Chat messages ── */
 .message-content {
-  line-height: 1.7 !important;
+  line-height: 1.75 !important;
   letter-spacing: 0.01em;
 }
+/* Agent message subtle left accent */
+[class*="assistant"] .message-content {
+  border-left: 3px solid transparent;
+  border-image: linear-gradient(180deg, var(--vf-primary), var(--vf-primary-light)) 1;
+  padding-left: 12px !important;
+}
 
-/* ── Action/feedback buttons ── */
+/* ── Feedback / action buttons ── */
 button[id*="feedback"],
 button[class*="action"] {
-  border-radius: 8px !important;
-  font-weight: 500 !important;
-  transition: all 0.15s ease !important;
+  border-radius: var(--vf-radius-sm) !important;
+  font-weight: 600 !important;
+  transition: all var(--vf-transition) !important;
+  border: 1px solid var(--vf-border) !important;
 }
 button[id*="feedback"]:hover,
 button[class*="action"]:hover {
-  transform: scale(1.05);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 /* ── Tool call steps ── */
 .step {
-  border-left: 3px solid var(--vinfast-green) !important;
-  border-radius: 4px !important;
+  border-left: 3px solid var(--vf-primary) !important;
+  border-radius: 6px !important;
+  background: var(--vf-primary-glow) !important;
+  margin: 4px 0 !important;
 }
 
-/* ── Scrollbar subtle style ── */
-::-webkit-scrollbar {
-  width: 6px;
+/* ── Input composer ── */
+textarea {
+  border-radius: var(--vf-radius) !important;
+  border: 1.5px solid var(--vf-border) !important;
+  transition: border-color var(--vf-transition) !important;
 }
-::-webkit-scrollbar-track {
-  background: transparent;
+textarea:focus {
+  border-color: var(--vf-primary) !important;
+  box-shadow: 0 0 0 3px var(--vf-primary-glow) !important;
 }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: rgba(0, 166, 81, 0.3);
+  background: var(--vf-primary-glow-strong);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 166, 81, 0.5);
+  background: var(--vf-primary);
 }
 
-/* ── Welcome markdown page ── */
+/* ── Welcome markdown ── */
 .markdown-body h1 {
-  background: linear-gradient(135deg, var(--vinfast-green), var(--vinfast-accent));
+  font-size: 1.8em !important;
+  font-weight: 800 !important;
+  background: linear-gradient(135deg, var(--vf-primary), var(--vf-primary-light));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  margin-bottom: 4px !important;
+}
+.markdown-body blockquote {
+  border-left: 4px solid var(--vf-primary) !important;
+  background: var(--vf-primary-glow) !important;
+  border-radius: 0 var(--vf-radius-sm) var(--vf-radius-sm) 0 !important;
+  padding: 12px 16px !important;
+  margin: 16px 0 !important;
 }
 .markdown-body table {
   border-collapse: separate !important;
   border-spacing: 0 !important;
-  border-radius: 8px !important;
+  border-radius: var(--vf-radius-sm) !important;
   overflow: hidden;
+  box-shadow: var(--vf-shadow);
+  width: 100%;
 }
 .markdown-body th {
-  background: var(--vinfast-green) !important;
+  background: linear-gradient(135deg, var(--vf-primary-dark), var(--vf-primary)) !important;
   color: white !important;
-  padding: 10px 14px !important;
+  padding: 12px 16px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+  font-size: 0.85em;
+  letter-spacing: 0.05em;
 }
 .markdown-body td {
-  padding: 10px 14px !important;
+  padding: 10px 16px !important;
+  border-bottom: 1px solid var(--vf-border) !important;
+}
+.markdown-body tr:last-child td {
+  border-bottom: none !important;
+}
+.markdown-body hr {
+  border: none !important;
+  height: 1px !important;
+  background: linear-gradient(90deg, transparent, var(--vf-primary-glow-strong), transparent) !important;
+  margin: 24px 0 !important;
 }
 
-/* ── Message input composer ── */
-textarea {
-  border-radius: 12px !important;
-}
-
-/* ── Smooth entrance for messages ── */
+/* ── Smooth entrance animations ── */
 @keyframes fadeSlideIn {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 var(--vf-primary-glow); }
+  50%      { box-shadow: 0 0 0 6px transparent; }
 }
 .message-row {
-  animation: fadeSlideIn 0.3s ease-out;
+  animation: fadeSlideIn 0.35s ease-out;
+}
+
+/* ── Typing indicator ── */
+[class*="typing"] {
+  animation: pulseGlow 1.5s ease-in-out infinite;
+}
+
+/* ── Links ── */
+.markdown-body a {
+  color: var(--vf-primary-light) !important;
+  text-decoration: none !important;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--vf-transition);
+}
+.markdown-body a:hover {
+  border-bottom-color: var(--vf-primary-light);
+}
+
+/* ── Code blocks ── */
+.markdown-body code {
+  background: var(--vf-primary-glow) !important;
+  border-radius: 4px !important;
+  padding: 2px 6px !important;
+  font-size: 0.9em !important;
+}
+.markdown-body pre {
+  border-radius: var(--vf-radius-sm) !important;
+  border: 1px solid var(--vf-border) !important;
+}
+
+/* ── Header links (GitHub etc) ── */
+[class*="headerLink"] {
+  transition: opacity var(--vf-transition);
+}
+[class*="headerLink"]:hover {
+  opacity: 0.8;
 }

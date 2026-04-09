@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#008c44"/>
+      <stop offset="100%" stop-color="#00c853"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="white" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="white" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <!-- Background circle -->
+  <circle cx="40" cy="40" r="38" fill="url(#bg)"/>
+  <circle cx="40" cy="40" r="38" fill="url(#shine)"/>
+  <!-- Car silhouette -->
+  <path d="M18 48h4a4 4 0 008 0h12a4 4 0 008 0h4v-10l-6-10H24l-6 10v10z" fill="white" opacity="0.95"/>
+  <circle cx="26" cy="48" r="3" fill="url(#bg)"/>
+  <circle cx="54" cy="48" r="3" fill="url(#bg)"/>
+  <!-- Windshield -->
+  <path d="M28 32h24l-3-6H31z" fill="url(#bg)" opacity="0.2"/>
+  <!-- AI sparkle -->
+  <circle cx="60" cy="20" r="6" fill="white" opacity="0.25"/>
+  <path d="M60 15v10M55 20h10" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
+  <path d="M57 17l6 6M63 17l-6 6" stroke="white" stroke-width="1" stroke-linecap="round" opacity="0.4"/>
+</svg>

@@ -50,22 +50,22 @@ def _extract_youtube_thumbnails(text: str) -> list[cl.Image]:
 async def set_starters():
     return [
         cl.Starter(
-            label="Tư vấn theo ngân sách",
+            label="💰 Tư vấn theo ngân sách",
             message="Tôi có 500 triệu, nên mua xe VinFast nào?",
             icon="/public/money.svg",
         ),
         cl.Starter(
-            label="Thông số kỹ thuật",
+            label="🔋 Thông số kỹ thuật",
             message="Pin VF 5 đi được bao nhiêu km?",
             icon="/public/battery.svg",
         ),
         cl.Starter(
-            label="Tìm showroom",
+            label="📍 Tìm showroom",
             message="Showroom VinFast ở Hà Nội ở đâu?",
             icon="/public/location.svg",
         ),
         cl.Starter(
-            label="Trải nghiệm thực tế",
+            label="⭐ Trải nghiệm thực tế",
             message="Người dùng VF 7 cảm nhận thế nào về xe?",
             icon="/public/review.svg",
         ),
@@ -78,15 +78,16 @@ async def on_chat_start():
     cl.user_session.set("messages", [SYSTEM_PROMPT])
     await cl.Message(
         content=(
-            "## Xin chào! 👋\n\n"
-            "Tôi là **trợ lý AI của VinFast** — giúp bạn tìm xe phù hợp nhanh chóng.\n\n"
+            "## 👋 Xin chào! Tôi là VinFast AI Advisor\n\n"
+            "Tôi giúp bạn tìm xe VinFast phù hợp — **nhanh chóng** và **có dẫn nguồn rõ ràng**.\n\n"
+            "---\n\n"
             "| | Khả năng |\n"
-            "|---|---|\n"
-            "| 🚗 | Tư vấn chọn xe theo ngân sách |\n"
-            "| 📊 | Tra cứu thông số kỹ thuật chi tiết |\n"
-            "| 📍 | Tìm showroom / đại lý gần bạn |\n"
-            "| 💬 | Tổng hợp đánh giá từ YouTube & Reddit |\n\n"
-            "👇 **Chọn gợi ý bên dưới** hoặc gõ câu hỏi bất kỳ!"
+            "|:---:|---|\n"
+            "| 🚗 | Tư vấn chọn xe trong ngân sách |\n"
+            "| 📊 | Tra cứu thông số **18 mẫu xe** VinFast |\n"
+            "| 📍 | Tìm showroom & đại lý gần bạn |\n"
+            "| 🎬 | Tổng hợp review từ **YouTube** & **Reddit** |\n\n"
+            "👇 **Chọn một chủ đề bên dưới** hoặc gõ câu hỏi bất kỳ!"
         ),
     ).send()
 
